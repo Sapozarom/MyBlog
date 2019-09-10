@@ -1,0 +1,59 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}My Comments{% endblock %}
+
+{% block body %}
+<div class="row mt-5 mb-5">
+	<div class="col-3">
+			{# nav #}
+			{% include 'user/panel/navigation.html.twig' %}
+	</div>
+	<div class="col-9 border-left border-dark">
+			{# content #}
+			<h2 class="handwirteing ">My Comments</h2><br>
+
+		<table class="table table-sm " style="width: 100%">
+			<tbody>	
+				{% for comment in list %}
+				<tr>
+					<div class="row border-top ml-4 rounded">
+						<div class="col-3">
+							<p class="small-text font-italic mb-0 pt-1 ">
+								{{ comment.createdAt |date("m.d.Y") }}
+							</p>
+						</div>
+						<div class="col-9">
+						<a class="row  no-underline small-text font-italic pt-1" href="{{ path('article.view', {slug: comment.post.slug}) }}#{{ comment.id }}">
+							Post: &nbsp;  <strong>{{ comment.post.title }} </strong>
+						</a>                 
+						</div>
+					</div>
+					<div class="row  mt-2 ml-4">
+						<div class="col-12">
+							<div class="ml-3">
+								{{ comment.content | raw }}
+							</div>
+						</div>
+					</div>
+					<div class="row justify-content-end border-bottom mb-4 ml-4 rounded">
+						{% if comment.deleted == false %}
+						<div class="col-1">
+							<a class="row font-weight-bold no-underline small-text" href="{{ path('comment.edit', {id: comment.id}) }}">   
+								Edit              
+							</a>
+						</div>
+						<div class="col-1 mr-3">
+							<a class="row font-weight-bold no-underline small-text" href="{{ path('comment.delete', {id: comment.id}) }}" onclick="return confirm('Do you really want to delete this comment?');">   
+								Delete              
+							</a>
+						</div>
+						{% endif %}
+					</div>
+					</tr>
+				{% endfor %}
+				
+			</tbody>
+		</table>
+	</div>
+</div>
+{% endblock %}

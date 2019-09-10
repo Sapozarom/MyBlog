@@ -1,0 +1,136 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}My Posts{% endblock %}
+
+{% block body %}
+<div class="row mt-5 mb-5">
+<div class="col-3">
+	{# nawigacja #}
+	{% include 'user/panel/navigation.html.twig' %}
+</div>
+
+<div class="col-9 border-left border-dark">
+	{# content #}
+	<h2 class="handwirteing">My Posts</h2><br>
+	<div class="row  bg-light pt-2 pb-2 ml-4">
+	
+		<div class="col-sm-offset-2 pr-2 pl-2">
+			<a class="no-underline" href="{{ path('user.panel.posts', {view: 'published'}) }}">
+				{% if view == 'published' %}
+					<strong>Published</strong>
+				{% else %}
+					Published
+				{% endif %}                    
+			</a>
+		</div>
+		<div class="col-sm-offset-2 border-left pr-2 pl-2">
+			<a class="no-underline " href="{{ path('user.panel.posts', {view: 'unpublished'}) }}">   
+				{% if view == 'unpublished' %}
+					<strong>Unpublished</strong>
+				{% else %}
+					Unpublished
+				{% endif %}                 
+			</a>
+		</div>
+		<div class="col-sm-offset-2 border-left pr-2 pl-2">
+			<a class="no-underline" href="{{ path('user.panel.posts', {view: 'archived'}) }}">   
+				{% if view == 'archived' %}
+					<strong>Archived</strong>
+				{% else %}
+					Archived
+				{% endif %}                 
+			</a>
+		</div>
+		<div class="col-sm-offset-2 border-left pr-2 pl-2">
+			<a class="no-underline" href="{{ path('user.panel.posts', {view: 'all'}) }}">   
+				{% if view == 'all' %}
+					<strong>All</strong>
+				{% else %}
+					All
+				{% endif %}                 
+			</a>
+		</div>
+	</div>
+
+	<table class="table table-sm " style="width: 100%">
+		<tbody>
+			{% for post in list %}
+			<tr>
+				<div class="row border-top border-secondary ml-4 rounded">
+					<div class="col-3">
+						<p class=" font-italic mb-0 pt-3 pb-2 ">
+							{{ post.createdAt |date("m.d.Y") }}
+						</p>
+					</div>
+					<div class="col-9">
+						<a class="row  no-underline handwirteing  " href="{{ path('article.view', {slug: post.slug}) }}">
+							{{ post.title }}
+						</a>                 
+					</div>
+				</div>
+				<div class="row border-top mt-2 ml-4 pt-3">
+					
+					<div class="col-4 align-self-center">
+						
+							<img src="{{ asset('uploads/posts/' ~ post.picture ) }}" class="article-picture" alt="">
+					
+					</div>
+					<div class="col-8">
+					
+						{{ post.prelude | raw }}
+					
+					</div>
+				</div>
+
+				<div class="row justify-content-end border-bottom mb-4 ml-4 mt-2 pb-2 rounded border-secondary">
+					<div class="col-sm-offset-2 pr-2 pl-2 align-self-center">
+						<a class="font-italic no-underline small-text ml-auto" href="{{ path('article.view', {slug: post.slug}) }}#comment-section">
+							<p class="text-right mb-0">
+								{{ post.comments|length }} comments
+							</p>
+						</a>
+					</div>
+					{% if  not post.published %}
+					<div class="col-sm-offset-2 pr-2 pl-2  align-self-center">
+						<a class="font-weight-bold no-underline small-text " href="{{ path('article.publish', {slug: post.slug}) }}" onclick="return confirm('This post will be visible to everybody. Do you wish to proceed?');">   
+						Publish              
+						</a>
+					</div>
+					{% endif %}
+
+					{% if not post.archived %}
+					<div class="col-sm-offset-2 pr-2 pl-2  align-self-center">
+						<a class="font-weight-bold no-underline small-text " href="{{ path('article.archive', {slug: post.slug}) }}" onclick="return confirm('Do you really want to archive this post? It will no longer be visible on homepage');">   
+							Archive              
+						</a>
+					</div>
+					{% endif %}
+
+					{% if post.archived %}
+					<div class="col-sm-offset-2 pr-2 pl-2  align-self-center">
+						<a class="font-weight-bold no-underline small-text " href="{{ path('article.unarchive', {slug: post.slug}) }}" onclick="return confirm('Do you really want to unarchive this post? ');">   
+							Unarchive              
+						</a>
+					</div>
+					{% endif %}
+					<div class="col-sm-offset-2 pr-2 pl-2 align-self-center">
+						<a class="font-weight-bold no-underline small-text " href="{{ path('article.edit', {slug: post.slug}) }}" >   
+							Edit              
+						</a>
+					</div>
+					<div class="col-sm-offset-2 pr-2 pl-2  align-self-center">
+						<form method="post" action="{{ path('article.delete', {slug: post.slug}) }}" onsubmit="return confirm('Do you really want to delete this article?');">
+							<input type="hidden" name="_method" value="DELETE">
+							<input type="hidden" name="_token" value="">
+							<button class="font-weight-bold small-text border-0 bg-white hoverable">Delete</button>
+						</form>  
+					</div>
+				</div>
+				</tr>
+			{% endfor %}
+			
+		</tbody>
+	</table>
+</div>
+</div>
+{% endblock %}

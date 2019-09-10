@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}MyBlog{% endblock %}
+
+{% block body %}
+<div class="row justify-content-center">
+    <h1 class="banner">MyBlog</h1>
+</div>
+<div class="row justify-content-center">
+<h2 class="handwirteing mb-5 font-italic text-center">How to make milions and change your life in thirty seconds without leaving your room</h2>
+</div>
+
+<table class="table">
+    <tbody>
+        <tr class="row ">
+            {# LIST OF ARTICLES #}
+            <td class="col-9">
+                
+                {% include 'homepage/layout/postList.html.twig' %} 
+
+            </td>
+
+            {# SIDEBAR #}
+            <td class="col-3">
+
+                {% include 'homepage/sidebar.html.twig' %}
+                
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+{% endblock %}

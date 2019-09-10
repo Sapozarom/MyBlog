@@ -1,0 +1,15 @@
+{% trans_default_domain 'FOSUserBundle' %}
+
+<h2 class="handwirteing ">Registration</h2>
+
+{{ form_start(form, {'method': 'post', 'action': path('fos_user_registration_register'), 'attr': {'class': 'fos_user_registration_register'}}) }}
+    
+    {{ form_row(form.username, {'help': 'Username should contain between 6 and 16 alphanumeric characters'}) }}
+    {{ form_row(form.email) }}
+    {{ form_row(form.plainPassword) }}
+    {{ form_row(form.name, {'label': 'Full Name'}) }}
+   
+    <div>
+        <input type="submit" class="btn btn-secondary" value="{{ 'registration.submit'|trans }}" />
+    </div>
+{{ form_end(form) }}

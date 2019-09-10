@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{% block title %}My Blog{% endblock %}</title>
+
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    
+    <link href="https://fonts.googleapis.com/css?family=Parisienne|Quicksand|Raleway" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
+    <link rel="stylesheet" href="{{ asset('css/MyCss.css') }}"  >
+    <div id="fb-root"></div>
+    <script async defer crossorigin="anonymous" src="https://connect.facebook.net/pl_PL/sdk.js#xfbml=1&version=v4.0&appId=531130000429308&autoLogAppEvents=1"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script crossorigin="anonymous" src="{{ asset('js/MyJs.js') }}"></script>
+    
+    {% block stylesheets %}{% endblock %}
+    {% block javascripts %}{% endblock %}
+</head>
+    <body>
+        
+		<nav class="navbar navbar-expand-lg navbar-light bg-light">
+				
+			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse navbar-collapse justify-content-center" id="navbarNavAltMarkup">
+				<div class="navbar-nav">
+					<a class="nav-item nav-link " href="{{ path('homepage') }}">Home<span class="sr-only">(current)</span></a>
+					<a class="nav-item nav-link " href="{{ path('aboutUs') }}">About Us</a>
+					
+					<a class="nav-item nav-link " href="{{ path('user.authors') }}">Authors</a>
+					<a class="nav-item nav-link mr-big" href="{{ path('contact') }}">Contact</a>
+					
+					<div class="row align-items-center">
+
+						{% if app.user %}
+						
+							<h1 class="handwirteing mr-2 font-italic"style="font-size: 1em">{{ app.user.username}} </h1>                               
+						
+						{% endif %}
+
+						{% if is_granted('ROLE_SUPER_ADMIN') %}
+						
+							<a class="nav-item nav-link text-danger" href="{{ path('easyadmin') }}" data-toggle="tooltip" title="Admin panel"><i class="fas fa-user-cog"></i></a>
+						{% endif %}
+
+						{% if is_granted('ROLE_ADMIN') %}
+						
+							<a class="nav-item nav-link " href="{{ path('article.create') }}" data-toggle="tooltip" title="Create article"><i class="fas fa-pen-nib"></i></a>
+						
+							{% endif %}
+
+						{% if app.user %}
+						
+						<!-- MENU AVAILABILITY DEPENDS ON SIGN-IN -->
+						
+							<a class="nav-item nav-link " href="{{ path('user.panel') }}" data-toggle="tooltip" title="User panel"><i class="fas fa-cog"></i></a>
+							<a class="nav-item nav-link " href="{{ path('fos_user_security_logout') }}" data-toggle="tooltip" title="Logout"><i class="fas fa-sign-out-alt"></i></a>
+
+						{% else %}
+
+							<a class="nav-item nav-link "  data-toggle="modal" data-target="#login"><i class="fas fa-sign-in-alt" data-toggle="tooltip" title="Login"></i></a>
+							<a class="nav-item nav-link " href="{{ path('fos_user_registration_register') }}" data-toggle="tooltip" title="Register"><i class="fas fa-user-plus"></i></a>
+						
+							{% endif %}
+					</div>
+				</div>
+			</div>
+		</nav>
+                 
+		<div class="container">
+			{# FLASH #}
+		{% for message in app.flashes('success') %}
+			<div class="alert alert-success mt-2" role="alert">
+				{{ message }}
+			</div>
+		{% endfor %}
+
+		{% for message in app.flashes('fail') %}
+			<div class="alert alert-danger mt-2" role="alert">
+				{{ message }}
+			</div>
+		{% endfor %}
+        
+      <!-- LOGIN MODAL -->
+	<div class="modal fade" id="login" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLongTitle">Login</h5>
+					
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					
+					<form action="{{ path("fos_user_security_check") }}" method="post">
+					
+						<input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+						<div class="form-group">    
+							<label for="username">Username:</label>
+							<input type="text" class="form-control" id="username" name="_username" value="" required="required" autocomplete="username" />
+						</div>
+							<div class="form-group">
+							<label for="password">Password:</label>
+							<input type="password" class="form-control" id="password" name="_password" required="required" autocomplete="current-password" />
+						</div>
+
+						<input type="checkbox" id="remember_me" name="_remember_me" value="on" />
+						<label for="remember_me">Remember me</label>
+						<br>
+						<input type="submit" class="btn btn-secondary" id="_submit" name="_submit" value="Log in" />
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+
+        {% block body %}{% endblock %}
+        
+        </div>
+	</body>
+	
+
+    <footer class="page-footer font-small bg-light">
+
+		<!-- Footer Links -->
+		<div class="container">
+
+		<!-- Grid row-->
+		<div class="row d-flex text-center justify-content-center mb-md-0 mb-2">
+	
+			<!-- Grid column -->
+			<div class="col-md-8 col-12 mt-5">
+				<p style="line-height: 1.7rem">Find us on social media</p>
+			</div>
+			<!-- Grid column -->
+	
+		</div>
+		<!-- Grid row-->
+		<hr class="clearfix d-md-none rgba-white-light" style="margin: 10% 15% 5%;">
+	
+		<!-- Grid row-->
+		<div class="row pb-3 justify-content-center">
+	
+			<!-- Grid column -->
+			<div class="col-md-12 ml-auto">
+	
+			<div class=" row mb-5 justify-content-center">
+	
+				<!-- Facebook -->
+				<a class="fb-ic">
+					<i class="fab fa-facebook-f fa-lg white-text mr-4"> </i>
+				</a>
+				<!-- Twitter -->
+				<a class="tw-ic">
+					<i class="fab fa-twitter fa-lg white-text mr-4"> </i>
+				</a>
+				<!-- Google +-->
+				<a class="gplus-ic " >
+					<i class="fab fa-google-plus-g fa-lg white-text mr-4"> </i>
+				</a>
+				<!--Linkedin -->
+				<a class="li-ic">
+					<i class="fab fa-linkedin-in fa-lg white-text mr-4"> </i>
+				</a>
+				<!--Instagram-->
+				<a class="ins-ic">
+					<i class="fab fa-instagram fa-lg white-text mr-4"> </i>
+				</a>
+				<!--Pinterest-->
+				<a class="pin-ic">
+					<i class="fab fa-pinterest fa-lg white-text"> </i>
+				</a>
+	
+			</div>
+	
+			</div>
+			<!-- Grid column -->
+	
+		</div>
+		<!-- Grid row-->
+	
+		</div>
+		<!-- Footer Links -->
+	
+		<!-- Copyright -->
+		<div class="footer-copyright text-center py-3">© 2019 Copyright:
+			<a href="">SK</a>
+		</div>
+		<!-- Copyright -->
+	
+	</footer>
+	<!-- Footer -->
+</html>

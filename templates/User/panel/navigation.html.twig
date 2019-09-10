@@ -1,0 +1,51 @@
+<ul class="nav flex-column nav-fill">
+	{% if is_granted('ROLE_ADMIN') %}
+	<li class="nav-item">
+		<a class="nav-link btn btn-outline-secondary" href="{{ path('article.create') }}">
+			<i class="fas fa-pen-nib"></i> 
+			Create article
+		</a>
+	</li>
+	{% endif %}
+	<li class="nav-item">
+	{% if app.request.attributes.get('_route') == 'user.panel' or app.request.attributes.get('_route') == 'user.panel.edit' %}
+		<a class="nav-link btn btn-light" href="{{ path('user.panel') }}">My settings</a>
+	{% else %}
+		<a class="nav-link " href="{{ path('user.panel') }}">My settings</a>
+	{% endif %}
+	</li>
+	<li class="nav-item">
+	{% if app.request.attributes.get('_route') == 'user.panel.comments' %}
+		<a class="nav-link btn btn-light" href="{{ path('user.panel.comments') }}">My comments</a>
+	{% else %}
+		<a class="nav-link" href="{{ path('user.panel.comments') }}">My comments</a>
+	{% endif %}        
+	</li>
+	<li class="nav-item">
+		{% if app.request.attributes.get('_route') == 'user.panel.password' %}
+
+		<a class="nav-link btn-light" href="{{ path('user.panel.password') }}">Change password</a>
+		
+		{% else %}
+		
+		<a class="nav-link" href="{{ path('user.panel.password') }}">Change password</a>
+
+		{% endif %}
+	</li>
+	{% if is_granted('ROLE_ADMIN') %}
+	
+	<li class="nav-item">
+		<li class="nav-item">
+			{% if app.request.attributes.get('_route') == 'user.panel.posts'%}
+	
+			<a class="nav-link btn-light" href="{{ path('user.panel.posts', {view: 'published'}) }}">My articles</a>
+			
+			{% else %}
+			
+			<a class="nav-link" href="{{ path('user.panel.posts', {view: 'published'}) }}">My articles</a>
+	
+			{% endif %}
+		</li>
+	</li>
+	{% endif %}
+</ul>

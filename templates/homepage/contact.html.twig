@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Contact Us{% endblock %}
+
+{% block body %}
+<div class="row justify-content-center">
+    <h1 class="banner">MyBlog</h1>
+</div>
+<div class="row justify-content-center">
+<h2 class="handwirteing mb-5 font-italic text-center">How to make milions and change your life in thirty seconds without leaving your room</h2>
+</div>
+
+<table class="table">
+    <tbody>
+        <tr class="row ">
+            {# LIST OF ARTICLES #}
+            <td class="col-9">
+                <div class="row justify-content-center bg-light mb-4 mr-3">
+                    <h1 class="article-title  ">Contact Us:</h1>
+                </div>
+                <div class="row justify-content-center"><h2 class="handwirteing ">Phone number:</h2></div>
+                <div class="row justify-content-center"><h2 class="handwirteing mb-2">123-456-789</h2></div>
+                <div class="row justify-content-center"><h2 class="handwirteing ">email:</h2></div>
+                <div class="row justify-content-center"><h2 class="handwirteing mb-2">contact@domain.com</h2></div>
+                <div class="row justify-content-center">
+                    <p class="text-center mt-2">
+                        <stron>Address:</stron><br>
+                        Puławska 123<br>
+                        12-345 Warszawa   
+                    </p>
+                </div>    
+            </td>
+
+            {# SIDEBAR #}
+            <td class="col-3">
+
+                {% include 'homepage/sidebar.html.twig' %}
+                
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+{% endblock %}

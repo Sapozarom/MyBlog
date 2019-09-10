@@ -1,0 +1,20 @@
+
+<div class="row">
+    <h2 class="handwirteing border-bottom">About Author</h><br>
+</div>
+
+<div class="row justify-content-center">
+    {% if post.author.photo is null %} 
+        <img src="{{ asset('img/blank-AVATAR.png' ) }}" class="face-picture-big" alt="">
+    {% else %}
+        <img src="{{ asset('uploads/users/' ~ post.author.photo ) }}" class="face-picture-big" alt="">
+    {% endif %}
+</div>
+<div class="row justify-content-center">
+        
+      <strong>{{ post.author.name }}</strong>
+      <br>
+  <p class="text-center mt-3">
+      {{ post.author.about }}
+  </p>
+</div>

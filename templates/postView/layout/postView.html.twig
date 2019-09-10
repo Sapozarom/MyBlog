@@ -1,0 +1,69 @@
+
+<div class="mb-1">
+
+    {# ARTICLE TITLE #}
+
+    <div class="row justify-content-center" id="article-title">  
+        <p class="article-title">
+            {{ post.title }}
+        </p>
+    </div>
+
+    {# AUTHOR #}
+    <div class="row border-top border-bottom pt-2 pb-2 mb-4 mr-3 ml-3">    
+        <div class="container">         
+            <p class="mb-0 mt-0 font-italic text-center">
+                author: {{ post.author.name }}
+                
+                {# INFO ABOUT ARCHIVIZATION #}
+                {% if post.archived %}
+                    <BR>
+                    This post is archived, it's no longer visible on homepage and comment option is disabled
+                {% endif %}
+                
+
+                {# EDIT OPRION FOR AUTHORS #}
+                {% if app.user and app.user.id == post.author.id %}
+                    <BR>
+                    You are an author of this post, 
+                    <a class="font-weight-bold no-underline" href="{{ path('article.edit', {slug: post.slug}) }}">   
+                        click here                                       
+                    </a> 
+                    to edit it.
+                {% endif %}
+            </p>      
+        </div>          
+    </div>
+    <div class= "container">
+
+        {# ARTICLE PHOTO #}
+        <img src="{{ asset('uploads/posts/' ~ post.picture ) }}" class="article-picture" alt="">
+        
+        {# ARTICLE PRELUDE #}
+        <p class="mt-3">
+            {{ post.content | raw}}
+        </p>
+
+    </div>
+
+    {# ARTICLE TAGS #}
+    <div class="row justify-content-center border-top border-bottom">           
+        <div class="mt-3">                
+            <p> 
+                Tags:
+                {% for tag in post.tags %}
+                <a href="{{ path('tag.articles', {id: tag.id}) }}">
+                    <button class="btn btn-outline-dark border-0 mb-1">
+                        {{ tag.name }}
+                    </button>
+                </a>
+                {% endfor %}
+            </p>
+        </div>                        
+    </div>
+</div>
+
+
+    
+
+

@@ -1,0 +1,121 @@
+/* My CSS */
+.banner {
+    font-size: 70px;
+    font-family: 'Parisienne', cursive;
+    text-shadow: 4px 4px 4px #979797b9;
+    margin-top:30px;
+}
+
+.aboutUs {
+    font-size: 40px;
+    font-family: 'Parisienne', cursive;
+    text-shadow: 4px 4px 4px #979797b9;
+    /* margin-top:30px; */
+}
+.handwirteing {
+    font-size: 20px;
+    /* font-style: italic; */
+    font-family: 'Quicksand', sans-serif;
+    /* text-shadow: 4px 4px 4px #aaa; */
+    margin-top:10px;
+}
+
+.article-title {
+    font-family: 'Quicksand', sans-serif;
+    font-size: 30px;
+    font-style: bold;
+    
+    
+}
+
+.comment-date {
+    font-size: 0.7em;
+}
+
+.small-text {
+    font-size: 0.8em;
+}
+
+.article-picture{
+    display: block;
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    object-fit: scale-down ;
+       
+}
+
+.article-picture:hover{
+    color: #9b9b9b;
+       
+}
+
+.face-picture-small{
+    width: 60px;
+    height: 60px;
+}
+
+.face-picture{
+    width: 100px;
+    height: 100px;
+}
+
+.face-picture-big{
+    width: 160px;
+    height: 160px;
+}
+
+.user-panel-post {
+    width: 20;
+}
+
+a {
+    color: black;
+}
+
+a.no-underline { 
+    text-decoration: none; 
+}
+
+
+a:hover { 
+    color: #9b9b9b;
+  }
+
+.mr-big {
+    margin-right: 150px;
+  }
+
+.ml-big{
+    margin-left: 150px;
+}
+
+.mb-big{
+    margin-bottom: 250px;
+}
+
+i.white {
+    background: white;
+    border-color: white;
+   
+}
+
+button.black-text {
+    color: rgb(102, 102, 102);
+    border-color: white;
+    
+}
+
+button.hoverable:hover {
+    color: #9b9b9b;
+}
+
+.spacing {
+    border-collapse:separate; 
+    border-spacing:0 15px;
+}
+
+.table-cell-bottom {
+    display: table-cell;
+    vertical-align: bottom;
+}

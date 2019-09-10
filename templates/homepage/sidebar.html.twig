@@ -1,0 +1,16 @@
+{# --------------ABOUT US SECTION--------------- #}
+
+{% include 'homepage/layout/aboutUs.html.twig' %}
+
+{# --------------TAG CLOUD--------------- #}
+
+{% include 'homepage/layout/tagCloud.html.twig' %}
+
+{# --------------FACEBOOK PROFILE BADGE--------------- #}
+
+    {% include 'homepage/layout/facebookBadge.html.twig' %}
+
+{# --------------ARCHIVE SECTION--------------- #}
+
+
+{{ render(controller( 'App\\Controller\\PostController::listArchived' )) }}

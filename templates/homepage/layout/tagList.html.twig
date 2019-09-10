@@ -1,0 +1,29 @@
+{% block body %}
+
+    <div class=" row align-items-center pl-2">
+
+        {% for tag in tags %}
+            <a class="" href="{{ path('tag.articles', {id: tag.id}) }}">
+                <div class="">
+                    <p>
+                        {% if  tag.posts|length <= 1 %}
+                        
+                            <button class="btn btn-outline-dark btn-sm border-0">
+
+                        {% elseif  tag.posts|length >= 2 and tag.posts|length <= 3 %}
+                            
+                            <button class="btn btn-outline-dark  border-0">
+
+                        {% elseif tag.posts|length > 3 %}
+
+                            <button class="btn btn-outline-dark btn-lg border-0">
+
+                        {% endif %}
+                            {{ tag.name }}
+                        </button>
+                    </p>
+                </div>
+            </a>
+        {% endfor %}
+    </div>
+{% endblock %}

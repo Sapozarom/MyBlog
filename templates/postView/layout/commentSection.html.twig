@@ -1,0 +1,98 @@
+<div>
+    <h2 class="handwirteing" id="comment-section">
+        Comments 
+        <br> 
+    </h2>
+
+    <div class="container" id="commentForm">
+
+        {# ---------------FORM-------------- #}
+        {% if app.user and not post.archived %}
+        
+            {% include 'comment/index.html.twig' %}
+
+        {% elseif post.archived %}
+
+            <input class="form-control mb-3" type="textarea" label="leave comment" placeholder="This post is archived, adding comments has been turned off" disabled>
+        
+        {% else %}
+
+            <input class="form-control mb-3" type="textarea" label="leave comment" placeholder="Login to comment articles" disabled>
+        
+
+        {% endif %}
+
+        {# ---------------/FORM-------------- #}
+        
+        <table class="table table-striped ">
+            <tbody>
+                {% for comment in post.comments %}
+                <tr class="row" id="{{ comment.id }}">   
+                    <td class="col-2 mt-1 border-0 " style="width:30%">
+                        <p>
+                            <strong>
+                                {{ comment.author.name }}
+                            </strong>
+                        </p>
+                        <p>
+                            {% if comment.author.photo is null %} 
+                                <img src="{{ asset('img/blank-AVATAR.png' ) }}" class="face-picture" alt="">
+                            {% else %}
+                                <img src="{{ asset('uploads/users/' ~ comment.author.photo ) }}" class="face-picture" alt="">
+                            {% endif %}
+                        </p>
+                        <p class="comment-date font-italic">
+                                {{ comment.createdAt |date("m.d.Y  G:i") }}
+                        </p>
+                        
+                        {% if app.user and comment.deleted == false %}
+                        
+                            {# buttons available for author of comment #}
+                            
+                            <div class="row mb-1">
+
+                                {% if app.user.id == comment.author.id %}
+
+                                <div class="col-1">
+                                    <a class=" font-weight-bold no-underline" data-toggle="tooltip" title="Edit" href="{{ path('comment.edit', {id: comment.id}) }}">   
+                                        <i class="fas fa-pencil-alt"></i>            
+                                    </a>
+                                </div>
+                                <div class="col-1">
+                                    <a class=" font-weight-bold no-underline " href="{{ path('comment.delete', {id: comment.id}) }}" data-toggle="tooltip" title="Delete" onclick="return confirm('Do you really want to delete this comment?');">     
+                                        <i class="fas fa-trash"></i>             
+                                    </a>
+                                </div>
+                                
+                                {% endif %}
+
+                                <!-- ADMIN DELETE -->
+                                {% if is_granted('ROLE_ADMIN') %}
+
+                                <div class="col-1 ">
+                                    <a class=" font-weight-bold no-underline  text-danger" data-toggle="tooltip" title="Admin delete" href="{{ path('comment_admin_delete', {id: comment.id}) }}" onclick="return confirm('Do you really want to delete this comment?');">     
+                                        <i class="fas fa-trash"></i>              
+                                    </a>
+                                </div>
+                            
+                                {% endif %}
+
+                            </div> 
+                                
+                        {% endif %}
+                    </td>
+                    <td class="col-9 mt-1  border-0">
+                        <div class="row  mt-2 ml-4 mb-2">
+                            <div class="col-12">
+                                <div class="ml-3">
+                                    {{ comment.content | raw }}
+                                </div>
+                            </div>                                
+                        </div>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>

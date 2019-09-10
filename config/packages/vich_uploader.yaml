@@ -1,0 +1,10 @@
+vich_uploader:
+    db_driver: orm
+
+    mappings:
+        post_images:
+            uri_prefix: '%post_directory_uri%'
+            upload_destination: '%post_directory%'
+        user_images:
+            uri_prefix: '%user_directory_uri%'
+            upload_destination: '%user_directory%'

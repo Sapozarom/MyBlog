@@ -1,0 +1,55 @@
+ {#<pre>
+    {{ dump() }} 
+</pre> #}
+
+<div class="row">
+    <h2 class="handwirteing border-bottom">Archive</h><br>
+</div>
+<div class="row pl-0">
+    <ul class="pl-1" style="list-style-type: none ">
+    
+    {% for key1, year in archivedArray %}
+        <li><strong>{{ key1 }} </strong></li>
+            <ul style="list-style-type: none">
+            {% for key2, month in year %}
+                <li>
+
+                    <a class=" no-underline" href="{{ path('article.archive.articlesUnderDate', {year: key1, month:key2}) }}"> 
+
+                        {% if key2 == '01' %}
+                            January
+                        {% elseif key2 == '02' %}
+                            February
+                        {% elseif key2 == '03' %}
+                            March
+                        {% elseif key2 == '04' %}
+                            April
+                        {% elseif key2 == '04' %}
+                            May
+                        {% elseif key2 == '06' %}
+                            June
+                        {% elseif  key2 == '07'%}
+                            July
+                        {% elseif  key2 == '08'%}
+                            August
+                        {% elseif key2 == '09' %}
+                            September
+                        {% elseif  key2 == '10'%}
+                            October
+                        {% elseif key2 == '11' %}
+                            November
+                        {% elseif key2 == '12' %}
+                            December
+                        {% else %}
+                            {{ key2 }} 
+                        {% endif %}
+                        
+                        ({{ month|length }})
+                    </a>
+                </li>
+            {% endfor %}
+            </ul>
+        {% endfor %}
+    </ul> 
+
+</div>

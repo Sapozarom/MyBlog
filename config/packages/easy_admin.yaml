@@ -1,0 +1,51 @@
+easy_admin:
+    entities:
+      Post:
+          class: App\Entity\Post
+          form:  
+                fields:
+                    - 'title'
+                    - { property: 'author', type_options: { disabled: true }, label: 'Author' }
+                    - { property: 'createdAt', type_options: { disabled: true }, label: 'Date' }
+                    - { property: 'pictureFile', type: 'vich_image', label: 'Cover Photo' }
+                    - { property: 'content', type: 'fos_ckeditor' }
+                    - 'tagsText'
+        
+      Comment:
+          class: App\Entity\Comment    
+          
+          disabled_actions: ['delete', 'new']
+    
+          list:
+                actions:
+                        - { name: 'comment_admin_delete', type: 'route', label: 'Delete', css_class: 'text-danger' }
+          edit:
+                actions:
+                        - { name: 'comment_admin_delete', type: 'route', label: 'Delete', css_class: 'btn btn-danger' }
+                fields:
+                    
+                    - { property: 'author', type_options: { disabled: true }, label: 'Author' }
+                    - { property: 'post', type_options: { disabled: true }, label: 'Article' }
+                    - { property: 'createdAt', type_options: { disabled: true }, label: 'Date' }
+                    - { property: 'content', type: 'fos_ckeditor' }
+                    - 'deleted'  
+      User:
+          class: App\Entity\User
+          disabled_actions: ['delete']
+          form:  
+                fields:
+                    - 'username'
+                    - { property: 'photoFile', type: 'vich_image', label: 'Photo' }
+                    - 'enabled'
+                    - 'name'
+                    - 'email'
+                    - 'about'
+                    - 'roles'
+                    
+          list:
+                fields: ['id', 'username', 'enabled', 'roles', 'email']
+                actions:
+                        - { name: 'user_admin_suspend', type: 'route', label: 'Suspend', css_class: 'text-danger' }
+      Tag:
+          class: App\Entity\Tag
+    site_name: 'MyBlog - Admin Panel'

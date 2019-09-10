@@ -1,0 +1,45 @@
+<!-- {{dump()}} -->
+<h1 class="article-title bg-light text-center mb-4">Authors</h1>
+
+{% for user in authors %}
+
+    {% if user.roles.0 == "ROLE_ADMIN" or  user.roles.0 == "ROLE_SUPER_ADMIN"%}
+    
+    <div class="row mb-3">
+
+        <div class="col-4">
+            <div class="row justify-content-center">
+                <strong>{{ user.name }}</strong>
+            </div>
+            <div class="row justify-content-center">
+                    {% if user.photo is null %} 
+                <img src="{{ asset('img/blank-AVATAR.png' ) }}" class="face-picture-big" alt="">
+            {% else %}
+                <img src="{{ asset('uploads/users/' ~ user.photo ) }}" class="face-picture-big" alt="">
+            {% endif %}
+            </div>
+            
+        </div>
+        <div class="col-8">
+            <p>
+                {{ user.about }}  
+            </p>
+            <div class="row justify-content-end">
+                <div class="col-sm-offset-2 pr-2 pl-2 align-self-center">
+                    <a class="  ml-auto" href="{{ path('article.byAuthor', {id: user.id}) }}">
+                        <p class="text-right mb-3 mr-4 font-weight-bold ">
+                            See all posts of this author >>>
+                        </p>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    {% endif %}
+
+{% endfor %}
+
+
+

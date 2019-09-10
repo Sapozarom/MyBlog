@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ post.title }}{% endblock %}
+
+{% block body %}
+
+<div class="row justify-content-center">
+    <h1 class="banner">MyBlog</h1>
+</div>
+
+<div class="row justify-content-center">
+    <h2 class="handwirteing mb-5 font-italic text-center">
+        How to make milions and change your life in thirty seconds without leaving your room
+    </h2>
+</div>
+
+<table class="table mb-0">
+    <tbody>
+        <tr class="row ">
+            {# ARTICLE #}
+            <td class="col-9">
+                
+                {% include 'postView/layout/postView.html.twig' %}
+
+            </td>
+
+            {# SIDEBAR #}
+            <td class="col-3">
+                     {% include 'postView/sidebar.html.twig' %}
+            </td>
+        </tr>
+    </tbody>
+</table>
+<!-- COMMENT SECTION -->
+
+{% include 'postView/layout/commentSection.html.twig' %} 
+
+{% endblock %}

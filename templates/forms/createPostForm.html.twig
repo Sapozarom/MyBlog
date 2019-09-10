@@ -1,0 +1,20 @@
+
+{{ form_start(form) }}
+{{ form_row(form.title) }}
+
+<img class ="article-picture" id="uploadedImage" />
+
+{{ form_row(form.picture,  { 'attr': {'onchange': 'readURL(this);'} }) }}    
+{{ form_row(form.content) }}
+{{ form_row(form.tagsText) }}
+
+<div class="row">
+    <div class="col-sm-offset-2 ml-3">
+        {{ form_row(form.save,  { 'attr': {'class': 'btn btn-secondary'} }) }}
+    </div>
+    <div class="col-sm-offset-2 ml-3">
+        {{ form_row(form.saveAndPublish,  { 'attr': {'class': 'btn btn-secondary'} }) }}
+    </div>
+</div>
+
+{{ form_end(form) }}

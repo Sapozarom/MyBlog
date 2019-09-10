@@ -1,0 +1,18 @@
+  
+{{ form_start(form) }}
+
+{{ form_row(form.title) }}
+
+<img class ="article-picture" id="uploadedImage" src="{{ asset('uploads/posts/'~ file ) }}" />
+
+{{ form_row(form.picture,  { 'attr': {'onchange': 'readURL(this);'} }) }}   
+
+{{ form_row(form.content) }}
+{{ form_row(form.tagsText) }}
+
+<div class="form-group">
+    <div class="col-sm-offset-2 col-sm-10">
+        <button type="submit" class="btn btn-default">Save</button>
+    </div>
+</div>
+{{ form_end(form) }}

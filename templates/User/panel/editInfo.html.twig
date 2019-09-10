@@ -1,0 +1,183 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit information{% endblock %}
+
+{% block body %}
+<div class="row mt-5 mb-5">
+<div class="col-3">
+    {# nawigacja #}
+    {% include 'user/panel/navigation.html.twig' %}
+</div>
+<div class="col-9 border-left border-dark">
+    {# content #}
+    <h2 class="handwirteing ">My Settings</h2><br>
+    <table class="table ml-auto mr-auto" style="width: 80%">
+        
+      <tbody>
+        <!-- PHOTO ROW-->
+
+        <!-- edit part -->
+        {% if edit == 'photo' %}
+        <tr>
+          <td><strong>Photo:</strong> </td>
+			<td colspan="2">
+				{% if user.photo is null %} 
+					<img id="uploadedImage" src="{{ asset('img/blank-AVATAR.png' ) }}" class="face-picture-big">
+				{% else %}
+					<img id="uploadedImage" src="{{ asset('uploads/users/' ~ user.photo ) }}" class="face-picture-big">
+				{% endif %}
+				
+				<!-- FORM  -->
+				{% include 'forms/editPhotoForm.html.twig' %}
+			</td>
+        </tr>
+
+        {% else %}
+        
+        <!-- static part -->
+        <tr>
+			<td><strong>Photo:</strong> </td>
+			<td>
+				{% if user.photo is null %} 
+				<img src="{{ asset('img/blank-AVATAR.png' ) }}" class="face-picture-big" alt="">
+				{% else %}
+				<img src="{{ asset('uploads/users/' ~ user.photo ) }}" class="face-picture-big" alt="">
+				{% endif %}
+			</td>
+			<td>
+				<ul class="nav flex-column nav-fill">
+					<li class="nav-item">
+					<a class="nav-link " href="{{ path('user.panel.edit', {'view': 'photo'}) }}">
+						<button type="button" class="btn btn-outline-light black-text">
+						<i class="fas fa-pen "></i> 
+						edit
+						</button>
+					</a>
+					</li>
+				</ul>
+			</td>   
+        </tr>
+        {% endif %}
+
+        <!-- USERNAME ROW /not editable/-->
+        <tr>
+			<td><strong>Username:</strong></td>
+			
+			<td> {{ user.username }} </td>
+			
+			<td></td>
+        </tr>
+
+        <!-- FULL NAME ROW -->  
+        <!-- edit part -->
+        {% if edit == 'name' %}
+		<tr>
+			<td><strong>Full name:</strong> </td>
+			<td colspan="2">
+
+			<!-- FORM  -->
+			{% include 'forms/editInfoForm.html.twig' %}
+
+			</td>
+		</tr>
+        {% else %}
+        <!-- static part -->
+        <tr>
+			<td><strong>Full name:</strong> </td>
+
+			<td> {{ user.name }} </td>
+
+			<td>
+				<ul class="nav flex-column nav-fill">
+					<li class="nav-item">
+						<a class="nav-link" href="{{ path('user.panel.edit', {'view': 'name'}) }}">
+							<button type="button" class="btn btn-outline-light black-text">
+								<i class="fas fa-pen "></i>
+								edit
+							</button>
+						</a>
+					</li>
+				</ul>
+			</td>
+        </tr>
+        {% endif %}
+
+        <!-- EMAIL ROW --> 
+
+        <!-- edit part -->
+        {% if edit == 'email' %}
+        <tr>
+			<td><strong>Email:</strong> </td>
+			<td colspan="2">
+				<!-- FORM  -->
+				{% include 'forms/editInfoForm.html.twig' %}
+			</td>
+        </tr>
+        {% else %}
+        <!-- static part -->
+        <tr>
+			<td><strong>Email:</strong> </td>
+			<td> {{ user.email }} </td>
+			<td>
+				<ul class="nav flex-column nav-fill">
+					<li class="nav-item">
+						<a class="nav-link " href="{{ path('user.panel.edit', {'view': 'email'}) }}">
+							<button type="button" class="btn btn-outline-light black-text">
+								<i class="fas fa-pen "></i> 
+								edit
+							</button>
+						</a>
+					</li>
+				</ul>
+			</td>
+        </tr>     
+        {% endif %}
+
+        {# AUTHORS ONLY #}
+        {% if is_granted('ROLE_ADMIN') %}
+        
+          <!-- edit part -->
+		{% if edit == 'about' %}
+            <tr>
+				<td><strong>About:</strong> </td>
+
+				<td colspan="2">
+					<!-- FORM  -->
+					{% include 'forms/editInfoForm.html.twig' %}
+				</td>
+            </tr>
+		{% else %}
+			<!-- static part -->
+            <tr>
+				<td><strong>About:</strong> </td>
+				<td> 
+					{% if user.about is not null %}
+						{{ user.about }} 
+					{% else %}
+					
+					{% endif %}
+				</td>    
+				<td>
+					<ul class="nav flex-column nav-fill">
+						<li class="nav-item">
+							<a class="nav-link " href="{{ path('user.panel.edit', {'view': 'about'}) }}">
+								<button type="button" class="btn btn-outline-light black-text">
+									<i class="fas fa-pen "></i> 
+									edit
+								</button>
+							</a>
+						</li>
+					</ul>
+              	</td>
+            </tr>
+          	{% endif %}
+        {% endif %}
+			<tr>
+				<td colspan="3"></td> 
+			</tr>
+      	</tbody>
+    </table>
+  </div>
+
+</div>
+{% endblock %}
