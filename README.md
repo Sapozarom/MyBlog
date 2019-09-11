@@ -4,9 +4,11 @@
 
 ## Intro
 
-MyBlog is a  web app created with PHP and Symfony 4 framework. It's a simple CRUD with a user system that allows multiple authors to publish their articles that can be seen and commented by website visitors.
+MyBlog is a  web app created with PHP (v. 7.3.1) and Symfony 4 framework. It's a simple CRUD with a user system that allows multiple authors to publish their articles that can be seen and commented by website visitors. App has implmented data fixtures that I suggest to load to get some basic content.
 
 ## Config
+
+The easiest way tu run the app is by using PHP's built-in server. That's why by defoult app is in dev enviroment.
 
 Follow this steps to run the app with PHP's built-in server:
 
