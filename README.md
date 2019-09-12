@@ -13,7 +13,10 @@ The easiest way tu run the app is by using PHP's built-in server. That's why by 
 Follow this steps to run the app with PHP's built-in server:
 
 1. Download all files from the [repository](https://github.com/Sapozarom/MyBlog)
-2. Open *MyBlog* localization in console and run `composer update`
+2. Open *MyBlog* localization in console and run `composer update`  
+    <span style="color:red"> 
+    *sometimes during this step a fatal error with allocated memory occurs, even though your memory limit is set quite high. It looks like a local settings issue, but I'm checking if there might be something wrong with app.* **Right now if this error shows up just try to run <span style="color:black">`composer update` </span>for the second time, it should work fine**
+    </span>
 3. Configure database:
     - open *MyBlog/.env* in editor
     - edit line 28 according to your DB server  
